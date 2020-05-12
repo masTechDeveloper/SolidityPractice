@@ -1,11 +1,19 @@
 pragma solidity ^0.6.0;
 
-contract testLocalHost {
+contract Calculator {
     
-    string public name = "Local Host";
     
-    function get() public view returns(string memory) {
+    function Calc(uint256 _x, uint256 _y) public view returns(uint256) {
         
-        return name;
+            
+            return _x + _y;
+        
+        
+        
     }
+    
+
+  
 }
+
+
