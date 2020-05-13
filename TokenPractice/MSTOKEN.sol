@@ -22,23 +22,16 @@ interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
-
-
-
-contract PIAICBCCToken is IERC20{
-    
+contract MSTOKEN is IERC20{
     
 using SafeMath for uint256;
     
-    
-    
-    
-    modifier onlyOwner() {
-        if (msg.sender != owner) {
-            revert();
-        }
-         _;
-    }
+    // modifier onlyOwner() {
+    //     if (msg.sender != owner) {
+    //         revert();
+    //     }
+    //      _;
+    // }
     
  
     mapping (address => uint256) private _balances;
@@ -52,6 +45,7 @@ using SafeMath for uint256;
     string public name;
     string public symbol;
     uint8 public decimals;
+    // uint256 public rate = 1000000000000000;
 
     constructor () public {
         name = "MSTOKEN";
@@ -112,57 +106,67 @@ using SafeMath for uint256;
         address spender = msg.sender;
         uint256 _allowance = _allowances[tokenOwner][spender];
         require(_allowance > amount, "BCC1: transfer amount exceeds allowance");
-        
-   
         _allowance = _allowance - amount;
-
         _balances[tokenOwner] =_balances[tokenOwner] - amount; 
-        
-     
         _balances[recipient] = _balances[recipient] + amount;
-        
         emit Transfer(tokenOwner, recipient, amount);
- 
         _allowances[tokenOwner][spender] = _allowance;
-        
         emit Approval(tokenOwner, spender, amount);
-        
         return true;
     }
     
+    //       fallback() external payable {
+    //     msg.sender.transfer(msg.value);
+    // }
+        
+    // function CheckBalance( address _address) public view returns(uint256){
+    //     return _address.balance;
+    // }
 
 
-
-
-
-
-    fallback () external payable {
+    // fallback () external payable {
         
         
-            uint256 tokens;
-            tokens = msg.value.mul(500);
-            _balances[msg.sender] = _balances[msg.sender].add(tokens);
-            _totalSupply = _totalSupply.add(tokens);
-            emit Transfer(address(0), msg.sender, tokens);
-            owner.transfer(msg.value);
-     
-        
-        
-       
-    }
+    //         uint256 tokens;
+    //         tokens = msg.value.mul(500);
+    //         _balances[msg.sender] = _balances[msg.sender].add(tokens);
+    //         _totalSupply = _totalSupply.add(tokens);
+    //         emit Transfer(address(0), msg.sender, tokens);
+    //         owner.transfer(msg.value);
+   // }
     
 
-    function transferAnyERC20Token(address payable tokenAddress, uint256 tokens) public payable onlyOwner() returns (bool success) {
-        return PIAICBCCToken(tokenAddress).transfer(owner, tokens);
-    }
+    // function transferAnyERC20Token(address payable tokenAddress, uint256 tokens) public payable onlyOwner() returns (bool success) {
+    //     return PIAICBCCToken(tokenAddress).transfer(owner, tokens);
+    // }
 
-    function transferReserveToken(address tokenAddress, uint256 tokens) public onlyOwner returns (bool success) {
-        return this.transferFrom(owner,tokenAddress, tokens);
-    }
+    // function transferReserveToken(address tokenAddress, uint256 tokens) public onlyOwner returns (bool success) {
+    //     return this.transferFrom(owner,tokenAddress, tokens);
+    // }
+    
+    //fallback function can be used to buy tokens
+//   fallback () external payable {
+//     buyTokens(msg.sender);
+//   }
 
+//   // low level token purchase function
+//   function buyTokens(address beneficiary) public payable {
+//     require(beneficiary != address(0));
+//     // require(validPurchase());
 
+//     uint256 weiAmount = msg.value;
 
+//     // calculate token amount to be created
+//     uint256 tokens = weiAmount.mul(rate);
 
+//     // update state
+//     weiRaised = weiRaised.add(weiAmount);
+
+//     token.mint(beneficiary, tokens);
+//     TokenPurchase(msg.sender, beneficiary, weiAmount, tokens);
+
+//     forwardFunds();
+//   }
 
 
 }
