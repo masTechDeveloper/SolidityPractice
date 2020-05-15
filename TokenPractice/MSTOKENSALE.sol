@@ -1,9 +1,82 @@
+// pragma solidity >=0.4.25 <0.7.0;
+
+// // import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+// // import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+
+// import "./MSTOKEN.sol";
+// import "./SafeMath.sol";
+
+// contract MSTOKENSALE {
+//   using SafeMath for uint256;
+
+//   MSTOKEN public token;
+//   address payable public wallet;
+//   uint256 public rate;
+//   uint256 public weiRaised;
+
+//   constructor(uint256 _rate, MSTOKEN _token) public {
+//     // require(_rate > 0);
+//     // require(_wallet != address(0));
+//     // require(_token != address(0));
+
+//     rate = _rate;
+//     // wallet = _wallet;
+//     token = _token;
+//   }
+
+// //   fallback () external payable {
+    
+// //   }
+
+//   function buyTokens(address _beneficiary) external payable {
+//     // require(_beneficiary != address(0));
+//     // require(msg.value != 0);
+
+//     uint256 tokens = msg.value.mul(rate);
+//     weiRaised = weiRaised.add(msg.value);
+//     token.transfer(_beneficiary, tokens);
+//     // wallet.transfer(msg.value);
+//   }
+  
+  
+  
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 pragma solidity >=0.4.21 <0.7.0;
 
 import "./MSTOKEN.sol";
-
+import "./SafeMath.sol";
 
 contract MSTOKENSALE {
+    
+    
+using SafeMath for uint256;
+    
     address payable admin;
     MSTOKEN public tokenContract;
     uint256 public tokenPrice;
@@ -17,9 +90,9 @@ contract MSTOKENSALE {
         tokenPrice = 1000000000000000000;
     }
 
-    fallback() external payable {
-        msg.sender.transfer(msg.value);
-    }
+    // fallback() external payable {
+    //     msg.sender.transfer(msg.value);
+    // }
 
     function muliply(uint256 x, uint256 y) internal pure returns (uint256 z) {
         require(y == 0 || (z = x * y) / y == x, "Error");
@@ -27,8 +100,8 @@ contract MSTOKENSALE {
 
     function buyTokens(uint256 _numberOfTokens) public payable {
           uint256 amountTobuy = msg.value;
-           require(
-            amountTobuy == muliply(_numberOfTokens, tokenPrice),
+          require(
+            amountTobuy == ( muliply(_numberOfTokens, tokenPrice) ).div( uint256(10**18)),
             "msg value should be equal to mul fun"
         );
         
