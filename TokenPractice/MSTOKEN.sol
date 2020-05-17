@@ -189,8 +189,6 @@ using SafeMath for uint256;
 }
 
 
-
-
 contract Sale {
     
         // uint256 public FIXED_PRICE = 1 ether;
